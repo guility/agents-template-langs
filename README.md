@@ -6,10 +6,10 @@ All policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility
 
 ## Current packages
 
-- [Python — `python-v1.0.0`](https://github.com/guility/agents-template-langs/tree/python-v1.0.0)
-- [Node.js/TypeScript — `nodejs-v1.0.0`](https://github.com/guility/agents-template-langs/tree/nodejs-v1.0.0)
-- [Rust — `rust-v1.0.0`](https://github.com/guility/agents-template-langs/tree/rust-v1.0.0)
-- [Go — `go-v1.0.0`](https://github.com/guility/agents-template-langs/tree/go-v1.0.0)
-- [C# — `csharp-v1.0.0`](https://github.com/guility/agents-template-langs/tree/csharp-v1.0.0)
+- [Python — `python-v1.0.1`](https://github.com/guility/agents-template-langs/tree/python-v1.0.1)
+- [Node.js/TypeScript — `nodejs-v1.0.1`](https://github.com/guility/agents-template-langs/tree/nodejs-v1.0.1)
+- [Rust — `rust-v1.0.1`](https://github.com/guility/agents-template-langs/tree/rust-v1.0.1)
+- [Go — `go-v1.0.1`](https://github.com/guility/agents-template-langs/tree/go-v1.0.1)
+- [C# — `csharp-v1.0.1`](https://github.com/guility/agents-template-langs/tree/csharp-v1.0.1)
 
 Check out a tag to get its standalone package. Create a new versioned tag when a package changes; never modify a published tag.
