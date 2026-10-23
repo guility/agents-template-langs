@@ -29,12 +29,12 @@ public class InMemoryRepository<T> : IRepository<T> where T : class
     {
         var idProperty = entity.GetType().GetProperty("Id");
         var id = idProperty?.GetValue(entity)?.ToString() ?? Guid.NewGuid().ToString();
-        
+
         if (_storage.TryAdd(id, entity))
         {
             return Task.FromResult(entity);
         }
-        
+
         throw new InvalidOperationException($"Entity with id {id} already exists");
     }
 
@@ -42,17 +42,17 @@ public class InMemoryRepository<T> : IRepository<T> where T : class
     {
         var idProperty = entity.GetType().GetProperty("Id");
         var id = idProperty?.GetValue(entity)?.ToString();
-        
+
         if (string.IsNullOrEmpty(id))
         {
             throw new InvalidOperationException("Entity must have an Id");
         }
-        
+
         if (!_storage.ContainsKey(id))
         {
             throw new KeyNotFoundException($"Entity with id {id} not found");
         }
-        
+
         _storage[id] = entity;
         return Task.CompletedTask;
     }
@@ -63,7 +63,7 @@ public class InMemoryRepository<T> : IRepository<T> where T : class
         {
             throw new KeyNotFoundException($"Entity with id {id} not found");
         }
-        
+
         return Task.CompletedTask;
     }
 

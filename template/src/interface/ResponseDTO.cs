@@ -49,7 +49,7 @@ public static class ResponseExtensions
                 _ => new OkObjectResult(response)
             };
         }
-        
+
         return new BadRequestObjectResult(response);
     }
 }
