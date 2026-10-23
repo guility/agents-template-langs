@@ -4,7 +4,8 @@ Apply the general requirements from `guility/agents_template/AGENTS.md`. This fi
 
 ## Implementation
 
-- Use Python 3.9 or newer and manage dependencies with `uv`; commit `uv.lock`.
+- Use the latest patch release in the Python 3.14.x series and manage dependencies with `uv`; commit `uv.lock`.
+- Use Ubuntu 26.04 LTS as the reference operating system. Verify portability separately when a component must support other platforms.
 - Add type hints to public interfaces. Keep domain entities independent of frameworks, use frozen dataclasses for immutable value objects, and use context managers for resource lifetimes.
 - Name classes and public types in PascalCase; use snake_case for functions, methods, modules, and variables. Name tests `test_{unit}_{scenario}_{expected_result}`.
 - Follow PEP 8. Document public APIs with docstrings. Represent expected failures with exceptions rather than error-code conventions.

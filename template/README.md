@@ -16,7 +16,8 @@ tests/
 ```
 
 ## Требования
-- Python 3.9+
+- Python 3.14.x (latest patch release in the 3.14 series)
+- Reference OS: Ubuntu 26.04 LTS
 - uv для управления зависимостями
 - 100% покрытие тестами (unit, integration, e2e)
 - 2 мутационных теста на каждую функцию

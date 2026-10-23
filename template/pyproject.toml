@@ -2,7 +2,7 @@
 name = "ddd-python-project"
 version = "0.1.0"
 description = "DDD-based Python project with clean architecture"
-requires-python = ">=3.9"
+requires-python = ">=3.14,<3.15"
 dependencies = []
 
 [project.optional-dependencies]
@@ -29,7 +29,7 @@ security = [
 
 [tool.black]
 line-length = 120
-target-version = ['py39', 'py310', 'py311', 'py312']
+target-version = ['py314']
 
 [tool.isort]
 profile = "black"
