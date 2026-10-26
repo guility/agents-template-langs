@@ -4,7 +4,7 @@ All repository policies in [`guility/agents_template/AGENTS.md`](https://github.
 
 ## Repository-specific rules
 
-- Maintain one long-lived branch per language, named `python`, `nodejs`, `rust`, `go`, or `csharp`. Each branch and its version tags contain only rules and templates for that language; keep shared requirements in `agents_template`.
+- Maintain one long-lived branch per language, named `python`, `nodejs`, `rust`, `go`, `csharp`, `cpp`, or `cuda`. Each branch and its version tags contain only rules and templates for that language; keep shared requirements in `agents_template`.
 - Publish immutable, annotated version tags named `<language>/v<major>.<minor>.<patch>` on the matching language branch. Do not move or overwrite published tags. Each package contains a language-specific root `AGENTS.md` and its component template under `template/`.
 - The old `<language>-v<version>` tags are retained as immutable compatibility refs; do not create further tags in that format.
 - Keep the default branch limited to repository-wide instructions and the tag index. Do not duplicate language package contents on the default branch.
