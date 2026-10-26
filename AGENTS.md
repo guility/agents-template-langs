@@ -1,13 +1,19 @@
-# AGENTS.md — agents-template-langs
+# C++ component rules
 
-All repository policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md) also apply here and to every language tag. A policy still applies when it is not repeated in this file.
+Apply the general requirements from `guility/agents_template/AGENTS.md`. This file contains only rules for C++ components.
 
-## Repository-specific rules
+## Implementation
 
-- Maintain one long-lived branch per language, named `python`, `nodejs`, `rust`, `go`, or `csharp`. Each branch and its version tags contain only rules and templates for that language; keep shared requirements in `agents_template`.
-- Publish immutable, annotated version tags named `<language>/v<major>.<minor>.<patch>` on the matching language branch. Do not move or overwrite published tags. Each package contains a language-specific root `AGENTS.md` and its component template under `template/`.
-- The old `<language>-v<version>` tags are retained as immutable compatibility refs; do not create further tags in that format.
-- Keep the default branch limited to repository-wide instructions and the tag index. Do not duplicate language package contents on the default branch.
-- Follow inherited limits: at most 8 files and 5 directories directly within any directory; for source, tests, scripts, and manually maintained configuration, every file is at most 300 physical lines and at least 95% are at most 100 lines. Lock files, generated files, vendored code, dependencies, and build outputs are excluded from line counts.
-- Required test suites must meet inherited 100% coverage gates. GitLab CI uses the inherited stage order and runs only after merge requests are merged into the protected default branch.
-- Keep package contents language-specific. Do not add general architecture, security, workflow, or CI policy to a language tag.
+- Use C++17 or a newer standard supported by the pinned compiler; set it explicitly in CMake.
+- Use CMake and CTest; keep build configuration reproducible and compiler warnings enabled.
+- Prefer RAII, value semantics, explicit ownership, const-correct interfaces, and standard-library types. Avoid owning raw pointers and unchecked casts.
+- Document public headers and failure behavior. Keep domain code independent of frameworks and device/runtime APIs.
+- Format with pinned `clang-format`; run `clang-tidy` and `cppcheck` with reviewed, versioned configuration.
+- Keep source, tests, scripts, and manually maintained configuration at or below 300 lines; follow inherited file-count and 100-line distribution limits.
+
+## Tests
+
+- Use CTest with non-empty unit, integration, mutation, and end-to-end suites where applicable.
+- Cover all unit line and branch paths; integration tests exercise each documented adapter boundary; end-to-end tests prove acceptance behavior.
+- Each unit/integration test function has at least one companion fault-injection test. Test every production function with at least two applicable mutants of different classes; require a 100% mutation score.
+- Keep test data deterministic, local, and non-sensitive. Do not silently skip a required suite or hardware gate.
