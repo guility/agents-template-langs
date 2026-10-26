@@ -1,0 +1,5 @@
+--- a/src/cuda/scale.cu
++++ b/src/cuda/scale.cu
+@@ -22,1 +22,1 @@
+-  values[index] = scale_value(values[index], factor);
++  values[index] = scale_value(values[index], 1.0F / factor);

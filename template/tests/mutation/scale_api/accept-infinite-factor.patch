@@ -1,0 +1,5 @@
+--- a/src/cuda/scale.cu
++++ b/src/cuda/scale.cu
+@@ -29,1 +29,1 @@
+-  if (!std::isfinite(factor)) {
++  if (std::isfinite(factor)) {

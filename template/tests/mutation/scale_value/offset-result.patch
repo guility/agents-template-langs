@@ -1,0 +1,5 @@
+--- a/include/cuda/scale.hpp
++++ b/include/cuda/scale.hpp
+@@ -14,1 +14,1 @@
+-  return value * factor;
++  return value * factor + 1.0F;

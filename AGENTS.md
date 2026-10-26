@@ -1,13 +1,17 @@
-# AGENTS.md — agents-template-langs
+# CUDA component rules
 
-All repository policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md) also apply here and to every language tag. A policy still applies when it is not repeated in this file.
+Apply the general requirements from `guility/agents_template/AGENTS.md` and the C++ rules in the `cpp` language package. This file contains only CUDA-specific rules.
 
-## Repository-specific rules
+## Toolchain and implementation
 
-- Maintain one long-lived branch per language, named `python`, `nodejs`, `rust`, `go`, or `csharp`. Each branch and its version tags contain only rules and templates for that language; keep shared requirements in `agents_template`.
-- Publish immutable, annotated version tags named `<language>/v<major>.<minor>.<patch>` on the matching language branch. Do not move or overwrite published tags. Each package contains a language-specific root `AGENTS.md` and its component template under `template/`.
-- The old `<language>-v<version>` tags are retained as immutable compatibility refs; do not create further tags in that format.
-- Keep the default branch limited to repository-wide instructions and the tag index. Do not duplicate language package contents on the default branch.
-- Follow inherited limits: at most 8 files and 5 directories directly within any directory; for source, tests, scripts, and manually maintained configuration, every file is at most 300 physical lines and at least 95% are at most 100 lines. Lock files, generated files, vendored code, dependencies, and build outputs are excluded from line counts.
-- Required test suites must meet inherited 100% coverage gates. GitLab CI uses the inherited stage order and runs only after merge requests are merged into the protected default branch.
-- Keep package contents language-specific. Do not add general architecture, security, workflow, or CI policy to a language tag.
+- Pin the CUDA Toolkit, CMake, host compiler, and GPU architecture in the component build image and release record. Select only a host compiler supported by that Toolkit; never bypass `nvcc` compatibility checks.
+- Set `CMAKE_CUDA_ARCHITECTURES` explicitly for every build. Do not rely on compiler defaults or `native` in release builds.
+- Keep host and device responsibilities explicit. Check CUDA API errors, use scoped ownership for device memory, synchronize deliberately, and document stream and device assumptions.
+- Treat architecture-specific kernels as a separate compatibility surface; include at least one real-GPU smoke on every supported release architecture.
+- Run Compute Sanitizer memory checks on GPU integration/e2e cases; fail on any sanitizer finding.
+
+## Tests and coverage
+
+- Provide non-empty unit, integration, mutation, and GPU end-to-end suites. GPU tests must fail when the required device is unavailable; do not silently skip them.
+- Meet inherited 100% line/branch coverage and mutation gates. Every production function has at least two applicable mutants of different classes, and each unit/integration test function has a companion fault-injection test.
+- NVIDIA documents Bullseye coverage for host functions only; it does not cover device functions. Do not report full CUDA coverage from host-only instrumentation. Before release, provide an approved device-code coverage method or documented owner decision satisfying the inherited gate; GPU smoke, mutation, and sanitizers remain required supplemental evidence.
