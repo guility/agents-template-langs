@@ -1,0 +1,5 @@
+--- a/src/interface/main.cpp
++++ b/src/interface/main.cpp
+@@ -17,1 +17,1 @@
+-  if (error != std::errc{} || end != input.data() + input.size()) {
++  if (error == std::errc{} || end != input.data() + input.size()) {

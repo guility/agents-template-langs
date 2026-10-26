@@ -1,0 +1,7 @@
+--- a/src/domain/score.cpp
++++ b/src/domain/score.cpp
+@@ -9,3 +9,3 @@
+   }
+-  if (raw_score > 100) {
++  if (raw_score > 101) {
+     return 100;

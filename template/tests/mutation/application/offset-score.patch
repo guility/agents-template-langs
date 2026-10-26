@@ -1,0 +1,7 @@
+--- a/src/application/score_service.cpp
++++ b/src/application/score_service.cpp
+@@ -7,3 +7,3 @@
+ int calculate_score(const int raw_score) noexcept {
+-  return domain::normalize_score(raw_score);
++  return domain::normalize_score(raw_score + 1);
+ }

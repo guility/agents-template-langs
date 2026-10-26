@@ -1,0 +1,5 @@
+--- a/src/interface/main.cpp
++++ b/src/interface/main.cpp
+@@ -9,1 +9,1 @@
+-  if (argc != 3 || std::string_view(argv[1]) != "--score") {
++  if (argc < 3 || std::string_view(argv[1]) != "--score") {

@@ -1,0 +1,7 @@
+--- a/src/domain/score.cpp
++++ b/src/domain/score.cpp
+@@ -6,3 +6,3 @@
+ int normalize_score(const int raw_score) noexcept {
+-  if (raw_score < 0) {
++  if (raw_score < -1) {
+     return 0;
