@@ -1,0 +1,5 @@
+--- a/src/cuda/scale.cu
++++ b/src/cuda/scale.cu
+@@ -33,1 +33,1 @@
+-    return {};
++    return {0.0F};

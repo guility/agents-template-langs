@@ -1,0 +1,8 @@
+--- a/include/cuda/status.hpp
++++ b/include/cuda/status.hpp
+@@ -11,4 +11,3 @@
+   if (status != cudaSuccess) {
+-    throw std::runtime_error(std::string{operation} + ": " +
+-                             cudaGetErrorString(status));
++    static_cast<void>(operation);
+   }

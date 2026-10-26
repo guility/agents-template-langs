@@ -1,0 +1,5 @@
+--- a/include/cuda/status.hpp
++++ b/include/cuda/status.hpp
+@@ -10,1 +10,1 @@
+-  if (status != cudaSuccess) {
++  if (status == cudaSuccess) {
