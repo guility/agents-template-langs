@@ -1,15 +1,7 @@
-# agents-template-langs
+# Lean-to-Rust component package
 
-Language-specific component rules and starter templates are published on a dedicated branch for each language. Each language branch contains only that language's rules and template. Version snapshots are immutable Git tags created from the matching language branch. The default branch contains only this index and repository-wide instructions.
+This package defines proof-bearing logic in Lean 4 and exposes it to Rust through Lungo. The starter pins Lean 4.35.0 and Lungo 1.120.164, whose worker adapter supports that Lean release.
 
-All policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md) apply here as well.
+The generated Rust is not a verified compiler result: Lungo documents differential checks against Lean's native backend, while listing its adapter, generators, and runtime in the trusted base. Rust host functions and GPU kernels are outside Lean's proof. See the package README and retain the project's full proof-boundary decision before using this as a production OCR runtime.
 
-## Current packages
-
-- Python: branch [`python`](https://github.com/guility/agents-template-langs/tree/python), current version [`python/v2.0.0`](https://github.com/guility/agents-template-langs/tree/python/v2.0.0) (Python 3.14.x, Ubuntu 26.04 LTS)
-- Node.js/TypeScript: branch [`nodejs`](https://github.com/guility/agents-template-langs/tree/nodejs), current version [`nodejs/v1.0.1`](https://github.com/guility/agents-template-langs/tree/nodejs/v1.0.1)
-- Rust: branch [`rust`](https://github.com/guility/agents-template-langs/tree/rust), current version [`rust/v1.0.1`](https://github.com/guility/agents-template-langs/tree/rust/v1.0.1)
-- Go: branch [`go`](https://github.com/guility/agents-template-langs/tree/go), current version [`go/v1.0.1`](https://github.com/guility/agents-template-langs/tree/go/v1.0.1)
-- C#: branch [`csharp`](https://github.com/guility/agents-template-langs/tree/csharp), current version [`csharp/v1.0.1`](https://github.com/guility/agents-template-langs/tree/csharp/v1.0.1)
-
-Use `git switch --track origin/<language>` to work on a language branch, or check out its version tag for an immutable snapshot. New tags use `<language>/v<major>.<minor>.<patch>` and must point to commits on the matching branch. Previously published `<language>-v<version>` tags remain unchanged for compatibility; create no further tags in that format.
+Fetch the immutable language package from lean/v1.0.0 after review and publication. The package is intended for a Lean proof component consumed by a Rust application; generated build output stays under Cargo's target directory.

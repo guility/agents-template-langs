@@ -1,0 +1,16 @@
+{"version": "1.3.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"url": "https://github.com/machinefabric/lungo-rs",
+   "type": "git",
+   "subDir": "lean",
+   "scope": "",
+   "rev": "ec6bf87a6ab8366c7a3bdd8f64a909ae85ef83fa",
+   "name": "lungo",
+   "manifestFile": "lake-manifest.json",
+   "inputRev": "v1.120.164",
+   "inherited": false,
+   "configFile": "lakefile.toml"}],
+ "name": "shapes",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}

@@ -1,0 +1,6 @@
+diff --git a/lean/Shapes.lean b/lean/Shapes.lean
+--- a/lean/Shapes.lean
++++ b/lean/Shapes.lean
+@@ -10 +10 @@
+-  rectangle.width * rectangle.height
++  rectangle.width * rectangle.width
