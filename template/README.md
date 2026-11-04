@@ -12,7 +12,11 @@ docker run --rm -v "$((Get-Location).Path):/workspace" -w /workspace lean-rust-c
 
 For an interactive shell, override the image command with bash. The image pins Rust 1.89.0 and installs Lean 4.35.0.
 
+The entrypoint materializes Lungo from the committed Lake manifest before running Cargo. For host-side commands, run `cd lean && lake update` once before Cargo commands.
+
 ## Required suites
+
+Run these from the container or after the one-time host setup above.
 
 ~~~bash
 cargo test --locked --test unit

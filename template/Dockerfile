@@ -11,7 +11,11 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://elan.lean-lang.org/elan-init.sh
     | sh -s -- -y --default-toolchain none \
     && elan toolchain install leanprover/lean4:v4.35.0
 
+COPY scripts/entrypoint.sh /usr/local/bin/lean-component-entrypoint
+RUN chmod +x /usr/local/bin/lean-component-entrypoint
+
 WORKDIR /workspace
 COPY . .
 
+ENTRYPOINT ["/usr/local/bin/lean-component-entrypoint"]
 CMD ["cargo", "test", "--locked"]
