@@ -1,0 +1,11 @@
+[package]
+name = "lean-rust-component"
+version = "0.1.0"
+edition = "2024"
+build = "build.rs"
+
+[dependencies]
+lungo = "=1.120.164"
+
+[build-dependencies]
+lungo-build = "=1.120.164"

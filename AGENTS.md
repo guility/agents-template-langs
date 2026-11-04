@@ -1,13 +1,27 @@
-# AGENTS.md — agents-template-langs
+# Lean component rules
 
-All repository policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md) also apply here and to every language tag. A policy still applies when it is not repeated in this file.
+Apply the general requirements from guility/agents_template/AGENTS.md. This package adds rules for Lean 4 projects that produce Rust through Lungo.
 
-## Repository-specific rules
+## Source and generation
 
-- Maintain one long-lived branch per language, named `python`, `nodejs`, `rust`, `go`, or `csharp`. Each branch and its version tags contain only rules and templates for that language; keep shared requirements in `agents_template`.
-- Publish immutable, annotated version tags named `<language>/v<major>.<minor>.<patch>` on the matching language branch. Do not move or overwrite published tags. Each package contains a language-specific root `AGENTS.md` and its component template under `template/`.
-- The old `<language>-v<version>` tags are retained as immutable compatibility refs; do not create further tags in that format.
-- Keep the default branch limited to repository-wide instructions and the tag index. Do not duplicate language package contents on the default branch.
-- Follow inherited limits: at most 8 files and 5 directories directly within any directory; for source, tests, scripts, and manually maintained configuration, every file is at most 300 physical lines and at least 95% are at most 100 lines. Lock files, generated files, vendored code, dependencies, and build outputs are excluded from line counts.
-- Required test suites must meet inherited 100% coverage gates. GitLab CI uses the inherited stage order and runs only after merge requests are merged into the protected default branch.
-- Keep package contents language-specific. Do not add general architecture, security, workflow, or CI policy to a language tag.
+- Keep proof-bearing source in lean/; pin an exact supported Lean release in lean/lean-toolchain. Do not use stable, nightly, or release-candidate pins.
+- Keep lake-manifest.json and Cargo.lock committed. Pin lungo and lungo-build to the same exact version.
+- Treat Rust emitted by Lungo as generated output. Do not edit it by hand or commit build output.
+- Put the Rust API, host facilities, CLI, and adapters in src/. Keep GPU operations behind explicit Lean-declared host facilities.
+- Give each exported Lean function at least one theorem claim checked by Lean's kernel; make the build require claims for every export.
+- Keep sorry, extra axioms, unsafe, and partial out of exports. The build must deny extra axioms and unsafe dependencies.
+
+## Proof boundary
+
+- A Lean theorem proves a statement about its Lean definition. It does not prove that the generated Rust backend, Lungo runtime, Rust host implementation, CUDA driver, or GPU kernel implements that definition.
+- Declare the generator, backend/runtime, linked libraries, Rust facilities, GPU kernels, driver, and hardware assumptions in the component's trust-boundary document.
+- Do not describe an OCR inference runtime as fully verified until the code-generation/runtime bridge and every GPU kernel are covered by the accepted proof model.
+- State tight resource bounds against an explicit cost model. Lungo build-worker resource limits are not runtime inference bounds.
+
+## Tests and tools
+
+- Run Lean proof checking and the Lungo build before Rust test suites. A failed theorem or missing required claim must fail the build.
+- Keep separate unit, integration, mutation, and end-to-end suites. Mutation checks must alter Lean implementation while keeping its theorem unchanged; the kernel must reject each semantic mutant.
+- Exercise every exported function through Rust tests and measure coverage for generated code and handwritten Rust with a toolchain that can report both accurately.
+- Use cargo fmt --check, cargo clippy --locked --all-targets -- -D warnings, cargo audit, lake build, and the pinned mutation/coverage commands.
+- Keep Lean, Rust, scripts, tests, and manually maintained configuration files within inherited 300-line maximum and 95%/100-line distribution limits.
