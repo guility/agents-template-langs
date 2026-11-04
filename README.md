@@ -12,4 +12,10 @@ All policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility
 - Go: branch [`go`](https://github.com/guility/agents-template-langs/tree/go), current version [`go/v1.0.1`](https://github.com/guility/agents-template-langs/tree/go/v1.0.1)
 - C#: branch [`csharp`](https://github.com/guility/agents-template-langs/tree/csharp), current version [`csharp/v1.0.1`](https://github.com/guility/agents-template-langs/tree/csharp/v1.0.1)
 
+## Packages proposed for review
+
+These language packages have review branches but are not yet published as immutable tags:
+
+- Lean-to-Rust: [Draft PR #4](https://github.com/guility/agents-template-langs/pull/4) targets the long-lived [`lean` branch](https://github.com/guility/agents-template-langs/tree/lean); planned tag `lean/v1.0.0` is not published. Its Lungo backend/runtime, generated Rust, host code, and GPU kernels remain outside Lean's proof, so this starter does not close eOCR's full inference-runtime proof requirement.
+
 Use `git switch --track origin/<language>` to work on a language branch, or check out its version tag for an immutable snapshot. New tags use `<language>/v<major>.<minor>.<patch>` and must point to commits on the matching branch. Previously published `<language>-v<version>` tags remain unchanged for compatibility; create no further tags in that format.
