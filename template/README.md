@@ -48,16 +48,13 @@ uv run mutmut run
 
 ## Проверка качества
 ```bash
-# Форматирование
-black src tests
-isort src tests
+# Быстрый push-набор
+ruff check src tests
+ruff format --check src tests
+lizard -C 10 -w src tests
 
-# Линтинг
-flake8 src tests
+# MR-only type check
 mypy src
-
-# Сложность (CNC ≤ 10)
-lizard -l 10 src
 ```
 
 ## Best Practices

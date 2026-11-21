@@ -1,19 +1,22 @@
 # Python component rules
 
-Apply the general requirements from `guility/agents_template/AGENTS.md`. This file contains only rules specific to Python components.
+Follow the shared policy in [`agents-template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md). This package contains only Python-specific rules.
 
 ## Implementation
 
-- Use the latest patch release in the Python 3.14.x series and manage dependencies with `uv`; commit `uv.lock`.
-- Use Ubuntu 26.04 LTS as the reference operating system. Verify portability separately when a component must support other platforms.
-- Add type hints to public interfaces. Keep domain entities independent of frameworks, use frozen dataclasses for immutable value objects, and use context managers for resource lifetimes.
-- Name classes and public types in PascalCase; use snake_case for functions, methods, modules, and variables. Name tests `test_{unit}_{scenario}_{expected_result}`.
-- Follow PEP 8. Document public APIs with docstrings. Represent expected failures with exceptions rather than error-code conventions.
-- Format with `black` and `isort`; lint with `ruff`, `flake8`, and `mypy`. Check complexity with `lizard` and `radon`; scan with `bandit` and `safety`.
+- Use Python 3.14.x and `uv`; commit the generated `uv.lock`.
+- Add type hints to public interfaces. Keep domain entities framework-independent, use frozen dataclasses for value objects, and manage resources with context managers.
+- Use PascalCase for classes and snake_case for functions, modules, variables, and tests (`test_{unit}_{scenario}_{expected_result}`).
+- Format and lint with Ruff. Run mypy during the MR gate. Use Lizard for CCN (maximum 10) and the shared complexity metrics.
 
-## Tests
+## Push and MR checks
 
-- Use `pytest` or `unittest`; prefer `pytest` fixtures and parametrization and use Arrange-Act-Assert.
-- Use `pytest-mock` or `unittest.mock` for test doubles. Use `pytest` with Testcontainers for integration tests and Playwright or Selenium for e2e tests where applicable.
-- Use `mutmut` or `cosmic-ray` for mutation testing; use `coverage.py` and `pytest-cov` for coverage reporting.
-- Keep tests independent and reproducible. Meet the inherited 100% coverage and mutation gates.
+- Every push runs Ruff check, Ruff format check, Gitleaks on outgoing commits, and Lizard CCN on changed files. The measured per-tool times are in the shared [fast-check table](https://github.com/guility/agents_template/blob/main/docs/quality/fast-check-benchmark.md).
+- MR checks add mypy, full SAST, dependency scanning, Dryer, build, and unit tests as defined by the shared pipeline.
+
+## Tests and mutation
+
+- Use pytest; keep unit, integration, e2e, and mutation tests independent and reproducible. Use Testcontainers for applicable integration tests.
+- Keep 100% coverage and mutation gates from the shared policy. Run native Mutmut and Uncle Bob Mutator after merge; the shared locked quality toolchain runs Dryer for this package.
+- `pytest-cov` reports line and branch coverage. Keep `mutmut` configuration in `pyproject.toml` aligned with the unit test command.
+- Keep `template/deploy/Dockerfiles/Dockerfile` with a `production` target and a later `tests` target that inherits from it and adds the locked unit-test extra.

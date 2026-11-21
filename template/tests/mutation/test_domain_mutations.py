@@ -5,7 +5,7 @@
 
 import pytest
 
-from src.domain import BaseEntity, Entity
+from domain import BaseEntity, Entity
 
 
 class TestBaseEntityMutations:
@@ -14,7 +14,7 @@ class TestBaseEntityMutations:
     def test_mutation_created_at_not_set(self):
         """Мутация: created_at не устанавливается автоматически."""
         # Мутация 1: created_at остается None
-        with pytest.raises(Exception):
+        with pytest.raises(AttributeError):
             # Если убрать авто-установку created_at
             entity = BaseEntity.__new__(BaseEntity)
             entity.id = "test"

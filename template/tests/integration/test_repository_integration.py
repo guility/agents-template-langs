@@ -2,8 +2,8 @@
 
 import pytest
 
-from src.domain import Entity
-from src.infrastructure import InMemoryRepository
+from domain import Entity
+from infrastructure import InMemoryRepository
 
 
 class TestRepositoryIntegration:
@@ -36,6 +36,7 @@ class TestRepositoryIntegration:
         # Verify deletion
         not_found = repository.get_by_id("entity-1")
         assert not_found is None
+        assert repository.delete("entity-1") is False
 
     def test_multiple_entities_isolation(self, repository):
         """Изоляция множественных сущностей."""

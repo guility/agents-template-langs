@@ -1,21 +1,18 @@
 """Application layer - use cases и порты (интерфейсы)."""
 
 from abc import ABC, abstractmethod
-from typing import Generic, List, Optional, TypeVar
-
-T = TypeVar("T")
 
 
-class RepositoryPort(ABC, Generic[T]):
+class RepositoryPort[T](ABC):
     """Порт для репозиториев (контракт инфраструктуры)."""
 
     @abstractmethod
-    def get_by_id(self, id: str) -> Optional[T]:
+    def get_by_id(self, id: str) -> T | None:
         """Получение сущности по ID."""
         raise NotImplementedError
 
     @abstractmethod
-    def get_all(self) -> List[T]:
+    def get_all(self) -> list[T]:
         """Получение всех сущностей."""
         raise NotImplementedError
 
@@ -30,7 +27,7 @@ class RepositoryPort(ABC, Generic[T]):
         raise NotImplementedError
 
 
-class UseCase(ABC, Generic[T]):
+class UseCase[T](ABC):
     """Базовый класс для use case."""
 
     @abstractmethod

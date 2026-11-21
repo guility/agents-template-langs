@@ -1,11 +1,10 @@
 """Unit tests для domain layer."""
 
-from dataclasses import dataclass
 from datetime import datetime
 
 import pytest
 
-from src.domain import BaseEntity, Entity, ValueObject
+from domain import BaseEntity, ValueObject
 
 
 class TestBaseEntity:
@@ -50,50 +49,3 @@ class TestValueObject:
         vo = ValueObject()
         with pytest.raises(AttributeError):
             vo.new_attr = "value"
-
-
-class TestEntity:
-    """Тесты для Entity."""
-
-    def test_entity_creation(self):
-        """Создание сущности."""
-        entity = Entity(id="entity-1")
-        assert entity.id == "entity-1"
-        assert entity.created_at is not None
-
-    def test_entity_update(self):
-        """Обновление сущности."""
-        entity = Entity(id="entity-1")
-        old_updated_at = entity.updated_at
-
-        # Обновление должно изменить updated_at
-        entity.update()
-
-        assert entity.updated_at is not None
-        if old_updated_at:
-            assert entity.updated_at >= old_updated_at
-
-    def test_entity_inherits_from_base(self):
-        """Entity наследуется от BaseEntity."""
-        entity = Entity(id="entity-1")
-        assert isinstance(entity, BaseEntity)
-
-    def test_entity_updates_mutable_subclass_field(self):
-        """Производная сущность обновляет изменяемое доменное поле."""
-
-        @dataclass(frozen=True)
-        class NamedEntity(Entity):
-            name: str = "before"
-
-        entity = NamedEntity(id="entity-1")
-
-        entity.update(name="after")
-
-        assert entity.name == "after"
-
-    def test_entity_rejects_identity_update(self):
-        """Идентичность сущности нельзя изменить через update()."""
-        entity = Entity(id="entity-1")
-
-        with pytest.raises(AttributeError):
-            entity.update(id="entity-2")

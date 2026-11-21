@@ -9,10 +9,10 @@ class BaseEntity:
     """Базовый класс для всех сущностей домена."""
 
     id: str
-    created_at: datetime = None
-    updated_at: datetime = None
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if self.created_at is None:
             object.__setattr__(self, "created_at", datetime.now())
 
@@ -28,7 +28,7 @@ class ValueObject:
 class Entity(BaseEntity):
     """Базовая сущность с поведением."""
 
-    def update(self, **kwargs):
+    def update(self, **kwargs: object) -> None:
         """Обновление сущности."""
         for key, value in kwargs.items():
             if key in {"id", "created_at"}:
