@@ -21,7 +21,6 @@ test = [
 ]
 security = [
     "pip-audit>=2.7",
-    "safety>=3.0",
     "bandit>=1.7",
 ]
 
