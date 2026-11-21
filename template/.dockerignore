@@ -1,0 +1,8 @@
+.git
+**/bin
+**/obj
+**/TestResults
+**/StrykerOutput
+**/.stryker-tmp
+coverage
+test-results

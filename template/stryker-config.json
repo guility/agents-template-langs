@@ -1,0 +1,7 @@
+{
+  "stryker-config": {
+    "project": "DDDTemplate.csproj",
+    "reporters": ["progress", "html", "json"],
+    "thresholds": { "high": 100, "low": 100, "break": 100 }
+  }
+}

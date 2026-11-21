@@ -1,16 +1,18 @@
 # C# component rules
 
-Apply the general requirements from `guility/agents_template/AGENTS.md`. This file contains only rules specific to C# components.
+Follow the shared policy in [`agents-template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md). This package contains only C#-specific rules.
 
 ## Implementation
 
-- Commit `packages.lock.json` and enable locked restore for package dependencies.
-- Follow C# naming conventions. Use async/await correctly, implement `IDisposable` for owned resources, use LINQ where it improves clarity, and document public APIs with XML documentation.
-- Name types, methods, and properties in PascalCase; use camelCase for local variables and parameters. Name test classes `{ClassName}Tests` and test methods `{Method}_{Scenario}_{Expected}`.
-- Use pattern matching where it makes control flow clearer. Format with `dotnet format` and analyze with Roslyn analyzers; check complexity with the selected analyzer.
+- Use .NET 10 LTS and the exact SDK version in `template/global.json`; commit `packages.lock.json`, and restore in locked mode.
+- Keep production code in `template/src/DDDTemplate.csproj`; the root `DDDTemplate.Tests.csproj` references it so Stryker mutates the production assembly under test.
+- Follow C# naming conventions. Use async/await correctly, implement `IDisposable` for owned resources, and document public APIs with XML comments.
+- Use xUnit or NUnit. Name test classes `{ClassName}Tests` and methods `{Method}_{Scenario}_{Expected}`.
+- Run `dotnet format` and SDK analyzers in the MR gate. These checks exceed the shared 0.5-second fast-push limit, so this language has no formatter or analyzer in the fast class. Use Lizard for CCN (maximum 10) and shared metrics.
 
-## Tests
+## Tests and mutation
 
-- Use xUnit or NUnit and `[Fact]` or `[Theory]` as appropriate.
-- Use `Moq` or `NSubstitute` for test doubles. Use `testcontainers-dotnet` for integration tests and SpecFlow or Playwright for applicable e2e tests.
-- Use Stryker.NET for mutation testing and Coverlet or dotCover for coverage. Keep tests independent and reproducible, and meet the inherited 100% coverage and mutation gates.
+- Use Moq or NSubstitute for test doubles. Use Testcontainers and Playwright only for applicable integration and e2e cases.
+- Keep 100% coverage and mutation gates from the shared policy. Run pinned Stryker.NET 5.0.0 after merge. Uncle Bob Mutator and Dryer are not used for C#.
+- Publish line and branch coverage with Coverlet.
+- Keep `template/deploy/Dockerfiles/Dockerfile` with `production` and inherited `tests` targets; build the production project first and restore test packages only in `tests`.
