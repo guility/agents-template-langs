@@ -8,8 +8,8 @@
     "build": "tsc",
     "test": "jest --coverage",
     "test:unit": "jest tests/unit --coverage",
-    "test:integration": "jest tests/integration --coverage",
-    "test:e2e": "jest tests/e2e --coverage",
+    "test:integration": "jest tests/integration --coverage=false",
+    "test:e2e": "jest tests/e2e --coverage=false",
     "test:mutation:cases": "jest tests/mutation --coverage",
     "test:mutation": "stryker run",
     "test:watch": "jest --watch",
@@ -43,7 +43,7 @@
     "typescript": "^5.3.3"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.17.1 <23"
   },
   "packageManager": "pnpm@8.15.0"
 }
