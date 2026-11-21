@@ -1,6 +1,9 @@
-FROM golang:1.24.2-bookworm AS production
+FROM golang:1.27.4-bookworm AS production
 
 WORKDIR /workspace
+RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 COPY src/templates/go/go.mod src/templates/go/go.sum ./src/templates/go/
 COPY src/templates/go/src/ ./src/templates/go/src/
 RUN cd src/templates/go && go build ./...
