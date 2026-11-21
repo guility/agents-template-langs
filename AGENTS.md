@@ -1,6 +1,6 @@
 # AGENTS.md — agents-template-langs
 
-All repository policies in [`guility/agents_template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md) also apply here and to every language tag. A policy still applies when it is not repeated in this file.
+All repository policies in [`guility/agents-template/AGENTS.md`](https://github.com/guility/agents-template/blob/main/AGENTS.md) also apply here and to every language tag. A policy still applies when it is not repeated in this file.
 
 ## Repository-specific rules
 
