@@ -1,54 +1,35 @@
-/** Unit tests для domain layer */
+import { BaseEntity, Entity, ValueObject } from "../../src/domain";
 
-import { BaseEntity, ValueObject, Entity } from '../../src/domain';
-
-class TestEntity extends Entity {
+class ConcreteEntity extends Entity {
   validate(): boolean {
     return this.id.length > 0;
   }
 }
 
-describe('BaseEntity', () => {
-  it('should create entity with id', () => {
-    const entity = new BaseEntity('test-123');
-    expect(entity.id).toBe('test-123');
-  });
+class ConcreteValueObject extends ValueObject {}
 
-  it('should set createdAt automatically', () => {
-    const entity = new BaseEntity('test-123');
+describe("BaseEntity", () => {
+  it("sets identity, creation time and update time", () => {
+    const entity = new ConcreteEntity("test-123");
+    expect(entity.id).toBe("test-123");
     expect(entity.createdAt).toBeInstanceOf(Date);
-  });
-
-  it('should update timestamp on updateTimestamp', () => {
-    const entity = new BaseEntity('test-123');
-    const oldTimestamp = entity.updatedAt;
-    
-    setTimeout(() => {
-      entity.updateTimestamp();
-      expect(entity.updatedAt).not.toBe(oldTimestamp);
-    }, 10);
+    expect(entity.updatedAt).toBeUndefined();
+    entity.updateTimestamp();
+    expect(entity.updatedAt).toBeInstanceOf(Date);
   });
 });
 
-describe('ValueObject', () => {
-  it('should be immutable (frozen)', () => {
-    const vo = new ValueObject();
-    expect(Object.isFrozen(vo)).toBe(true);
+describe("ValueObject", () => {
+  it("is immutable", () => {
+    expect(Object.isFrozen(new ConcreteValueObject())).toBe(true);
   });
 });
 
-describe('Entity', () => {
-  it('should create entity extending BaseEntity', () => {
-    const entity = new TestEntity('entity-1');
+describe("Entity", () => {
+  it("validates nonempty and empty identities", () => {
+    const entity = new ConcreteEntity("entity-1");
     expect(entity).toBeInstanceOf(BaseEntity);
-    expect(entity.id).toBe('entity-1');
-  });
-
-  it('should validate correctly', () => {
-    const validEntity = new TestEntity('valid-id');
-    expect(validEntity.validate()).toBe(true);
-
-    const invalidEntity = new TestEntity('');
-    expect(invalidEntity.validate()).toBe(false);
+    expect(entity.validate()).toBe(true);
+    expect(new ConcreteEntity("").validate()).toBe(false);
   });
 });

@@ -1,6 +1,6 @@
 /** Application layer - Use Cases и Ports (интерфейсы) */
 
-import { Entity } from '../domain';
+import { Entity } from "../domain";
 
 // Repository Port - интерфейс для репозиториев
 export interface Repository<T extends Entity> {
@@ -17,7 +17,5 @@ export interface UseCase<TRequest, TResponse> {
 
 // DTO базовый класс
 export abstract class DTO {
-  constructor() {
-    Object.freeze(this);
-  }
+  protected constructor() {}
 }

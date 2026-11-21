@@ -1,0 +1,7 @@
+.git
+**/node_modules
+**/.stryker-tmp
+coverage
+dist
+test-results
+reports

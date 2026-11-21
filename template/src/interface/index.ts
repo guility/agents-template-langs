@@ -1,6 +1,6 @@
 /** Interface layer - Controllers и DTOs */
 
-import { UseCase, DTO } from '../application';
+import { UseCase, DTO } from "../application";
 
 // Базовый Response DTO
 export class ResponseDTO<T = unknown> extends DTO {
@@ -28,17 +28,18 @@ export abstract class RequestDTO extends DTO {
 export abstract class Controller {
   protected async handleRequest<TReq extends RequestDTO, TRes>(
     request: TReq,
-    useCase: UseCase<TReq, TRes>
+    useCase: UseCase<TReq, TRes>,
   ): Promise<ResponseDTO<TRes>> {
     if (!request.validate()) {
-      return new ResponseDTO<TRes>(false, undefined, 'Invalid request');
+      return new ResponseDTO<TRes>(false, undefined, "Invalid request");
     }
 
     try {
       const result = await useCase.execute(request);
       return new ResponseDTO<TRes>(true, result);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       return new ResponseDTO<TRes>(false, undefined, errorMessage);
     }
   }

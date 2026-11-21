@@ -1,16 +1,22 @@
 # Node.js and TypeScript component rules
 
-Apply the general requirements from `guility/agents_template/AGENTS.md`. This file contains only rules specific to Node.js and TypeScript components.
+Follow the shared policy in [`agents-template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md). This package contains only Node.js and TypeScript-specific rules.
 
 ## Implementation
 
-- Use Node.js 18 or newer and pnpm 8 or newer; commit `pnpm-lock.yaml`.
-- Enable strict TypeScript checking and avoid `any`. Prefer ES module imports, async/await, immutable data updates, and destructuring when it improves clarity.
-- Name classes and types in PascalCase; use camelCase for functions, methods, and variables. Name tests with nested `describe` and behavior-focused `it` descriptions.
-- Format with Prettier; lint and type-check with ESLint and `tsc`. Check complexity with the tools selected for the project and scan dependencies with `npm audit` or Snyk.
+- Use Node.js 22.x and pnpm; commit `pnpm-lock.yaml` and use strict TypeScript.
+- Prefer ES modules, async/await, and immutable updates. Avoid `any`.
+- Use PascalCase for types and classes, camelCase for values, and behavior-focused test names.
+- Use Prettier for formatting. Run ESLint and `tsc` in the MR gate. Use Lizard for CCN (maximum 10) and the shared complexity metrics.
 
-## Tests
+## Push and MR checks
 
-- Use Jest or Vitest.
-- Use `jest.mock()` or `vi.mock()` for test doubles. Use Supertest and Testcontainers for applicable integration tests; Playwright or Cypress for e2e; Cucumber or Jest BDD for behavior tests.
-- Use Stryker for mutation testing and the runner's built-in coverage reporting. Keep tests independent and reproducible, and meet the inherited 100% coverage and mutation gates.
+- Every push runs Prettier check, Gitleaks on outgoing commits, and Lizard CCN on changed files. The measured per-tool times are in the shared [fast-check table](https://github.com/guility/agents_template/blob/main/docs/quality/fast-check-benchmark.md).
+- MR checks add ESLint, `tsc`, full SAST, dependency scanning, Dryer, build, and unit tests as defined by the shared pipeline.
+
+## Tests and mutation
+
+- Use Jest. Keep tests deterministic; use Testcontainers, Supertest, and Playwright only for applicable integration and e2e cases.
+- Keep 100% coverage and mutation gates from the shared policy. Run Stryker and Uncle Bob Mutator after merge; the shared locked quality toolchain runs Dryer for this package.
+- Publish line and branch coverage from Jest. The `test:mutation` script runs mutation tests; the Stryker job mutates production code separately.
+- Keep `template/deploy/Dockerfiles/Dockerfile` with `production` and inherited `tests` targets; restore production dependencies first and add locked test dependencies only in `tests`.

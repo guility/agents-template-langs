@@ -1,7 +1,7 @@
 /** Infrastructure layer - реализация портов */
 
-import { Entity, BaseEntity } from '../domain';
-import { Repository } from '../application';
+import { Entity } from "../domain";
+import { Repository } from "../application";
 
 // In-Memory Repository для тестирования
 export class InMemoryRepository<T extends Entity> implements Repository<T> {
