@@ -17,6 +17,8 @@ RUN cd src/templates/nodejs && pnpm prune --prod
 FROM node:22.23.5-bookworm-slim AS production
 RUN apt-get update \
     && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+        /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /workspace
 COPY --from=application-build /workspace/src/templates/nodejs/package.json ./src/templates/nodejs/
