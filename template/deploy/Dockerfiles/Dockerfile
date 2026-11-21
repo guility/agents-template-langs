@@ -1,6 +1,9 @@
 FROM rust:1.100.0-slim AS production
 
 WORKDIR /workspace
+RUN apt-get update \
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 COPY src/templates/rust/Cargo.toml src/templates/rust/Cargo.lock ./src/templates/rust/
 COPY src/templates/rust/src/ ./src/templates/rust/src/
 RUN cargo build --manifest-path src/templates/rust/Cargo.toml --locked --release
