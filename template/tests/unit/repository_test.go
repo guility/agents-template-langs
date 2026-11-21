@@ -64,6 +64,10 @@ func TestRepositoryFindWhere(t *testing.T) {
 	if err != nil || len(unmatched) != 0 {
 		t.Fatalf("FindWhere should skip unknown fields: %v, %v", unmatched, err)
 	}
+	different, err := repository.FindWhere(ctx, map[string]interface{}{"Name": "other"})
+	if err != nil || len(different) != 0 {
+		t.Fatalf("FindWhere should reject mismatched field values: %v, %v", different, err)
+	}
 }
 
 func TestRepositoryDelete(t *testing.T) {

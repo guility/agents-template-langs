@@ -79,10 +79,21 @@ func (r *InMemoryRepository[T]) FindWhere(ctx context.Context, criteria map[stri
 
 	result := make([]*T, 0)
 	for _, entity := range r.data {
+		value := reflect.ValueOf(entity).Elem()
+		if value.Kind() != reflect.Struct {
+			return nil, fmt.Errorf("cannot filter non-struct entity %T", entity)
+		}
 		match := true
 		for fieldName, expected := range criteria {
-			field := reflect.ValueOf(entity).Elem().FieldByName(fieldName)
-			if !field.IsValid() || !reflect.DeepEqual(field.Interface(), expected) {
+			field := value.FieldByName(fieldName)
+			if !field.IsValid() {
+				match = false
+				break
+			}
+			if !field.CanInterface() {
+				return nil, fmt.Errorf("cannot filter by unexported field %q", fieldName)
+			}
+			if !reflect.DeepEqual(field.Interface(), expected) {
 				match = false
 				break
 			}
