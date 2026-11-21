@@ -3,6 +3,7 @@ namespace DddTemplate.Tests.Unit.Domain;
 using DddTemplate.Domain;
 using Xunit;
 
+[Trait("Category", "Unit")]
 public class ValueObjectTests
 {
     [Fact]

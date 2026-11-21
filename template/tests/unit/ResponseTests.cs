@@ -4,6 +4,7 @@ using DddTemplate.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 
+[Trait("Category", "Unit")]
 public class ResponseTests
 {
     [Fact]

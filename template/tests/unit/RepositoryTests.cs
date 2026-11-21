@@ -3,6 +3,7 @@ namespace DddTemplate.Tests.Unit.Infrastructure;
 using DddTemplate.Infrastructure;
 using Xunit;
 
+[Trait("Category", "Unit")]
 public class InMemoryRepositoryTests
 {
     [Fact]

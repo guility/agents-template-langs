@@ -4,6 +4,7 @@ using System;
 using DddTemplate.Domain;
 using Xunit;
 
+[Trait("Category", "Unit")]
 public class BaseEntityTests
 {
     [Fact]
