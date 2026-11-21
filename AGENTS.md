@@ -1,16 +1,21 @@
 # Go component rules
 
-Apply the general requirements from `guility/agents_template/AGENTS.md`. This file contains only rules specific to Go components.
+Follow the shared policy in [`agents-template/AGENTS.md`](https://github.com/guility/agents_template/blob/main/AGENTS.md). This package contains only Go-specific rules.
 
 ## Implementation
 
-- Commit both `go.mod` and `go.sum`.
-- Handle errors explicitly. Keep interfaces small, use exported names with initial capitals, follow Effective Go, and document exported APIs in Go doc style.
-- Use Go's MixedCaps naming (initial capital for exported identifiers, lower case for unexported identifiers). Name tests `Test{Function}_{Scenario}`.
-- Format with `gofmt` and `goimports`; lint with `golangci-lint`. Check complexity with `lizard` or `gocyclo` and scan with `gosec`.
+- Commit both `go.mod` and `go.sum`. The supported minimum Go version is recorded in `go.mod`; CI pins its toolchain.
+- Handle errors explicitly. Keep interfaces small, use Go's exported-name conventions, and document exported APIs.
+- Name tests `Test{Function}_{Scenario}`. Format with `gofmt`; use golangci-lint for linting and Lizard for CCN (maximum 10) and shared metrics.
 
-## Tests
+## Push and MR checks
 
-- Use Go's built-in `testing` package and table-driven tests for related cases.
-- Use `gomock` or `testify/mock` for test doubles. Use `testcontainers-go` for applicable integration tests and `godog` or `ginkgo` for e2e/BDD scenarios.
-- Use a supported Go mutation tool and `go test -cover` for coverage. Keep tests independent and reproducible, and meet the inherited 100% coverage and mutation gates.
+- Every push runs gofmt, golangci-lint, Gitleaks on outgoing commits, and Lizard CCN on changed files. The measured per-tool times are in the shared [fast-check table](https://github.com/guility/agents_template/blob/main/docs/quality/fast-check-benchmark.md).
+- MR checks add dependency audit, full SAST, Dryer, build, and unit tests as defined by the shared pipeline.
+
+## Tests and mutation
+
+- Use Go's `testing` package and table-driven tests. Use Testcontainers and BDD/e2e tools only where the component has those boundaries.
+- Keep 100% coverage and mutation gates from the shared policy. Run Gremlins v0.6.0 and Uncle Bob Mutator after merge; the shared locked quality toolchain runs Dryer for this package.
+- Publish line and branch coverage from `go test -cover`.
+- Keep `template/deploy/Dockerfiles/Dockerfile` with `production` and inherited `tests` targets; compile production first and resolve any test-only modules in `tests`.

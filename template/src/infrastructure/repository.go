@@ -2,7 +2,9 @@ package infrastructure
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"reflect"
 	"sync"
 )
 
@@ -45,11 +47,16 @@ func (r *InMemoryRepository[T]) GetAll(ctx context.Context) ([]*T, error) {
 
 // Save persists an entity
 func (r *InMemoryRepository[T]) Save(ctx context.Context, entity *T) error {
+	if entity == nil {
+		return errors.New("entity is required")
+	}
+	identified, ok := any(entity).(interface{ GetID() string })
+	if !ok {
+		return errors.New("entity must implement GetID() string")
+	}
 	r.mu.Lock()
 	defer r.mu.Unlock()
-
-	// This assumes T has an ID field - in real implementation you'd use reflection or interface
-	r.data[fmt.Sprintf("%v", entity)] = entity
+	r.data[identified.GetID()] = entity
 	return nil
 }
 
@@ -73,9 +80,9 @@ func (r *InMemoryRepository[T]) FindWhere(ctx context.Context, criteria map[stri
 	result := make([]*T, 0)
 	for _, entity := range r.data {
 		match := true
-		for _, value := range criteria {
-			// Simplified criteria matching - real implementation would use reflection
-			if fmt.Sprintf("%v", entity) != fmt.Sprintf("%v", value) {
+		for fieldName, expected := range criteria {
+			field := reflect.ValueOf(entity).Elem().FieldByName(fieldName)
+			if !field.IsValid() || !reflect.DeepEqual(field.Interface(), expected) {
 				match = false
 				break
 			}
