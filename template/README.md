@@ -43,7 +43,7 @@ pnpm build
 ## Требования
 
 - Node.js >= 18
-- pnpm >= 8
+- Use Corepack to run the pnpm version pinned in `package.json`.
 
 ## Тестирование
 

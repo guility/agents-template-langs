@@ -4,7 +4,7 @@ Follow the shared policy in [agents-template/AGENTS.md](https://github.com/guili
 
 ## Implementation
 
-- Use Node.js 22.x and pnpm; commit `pnpm-lock.yaml` and use strict TypeScript.
+- Use Node.js 22.x and the pnpm version declared in `package.json#packageManager`; commit `pnpm-lock.yaml` and use strict TypeScript.
 - Prefer ES modules, async/await, and immutable updates. Avoid `any`.
 - Use PascalCase for types and classes, camelCase for values, and behavior-focused test names.
 - Use Prettier for formatting, ESLint for linting, and `tsc` for type checking.
