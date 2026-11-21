@@ -12,6 +12,6 @@ The [component × metric quality matrix](https://github.com/guility/agents-templ
 - Node.js/TypeScript: branch [`nodejs`](https://github.com/guility/agents-template-langs/tree/nodejs), current version [`nodejs/v1.0.4`](https://github.com/guility/agents-template-langs/tree/nodejs/v1.0.4)
 - Rust: branch [`rust`](https://github.com/guility/agents-template-langs/tree/rust), current version [`rust/v1.0.4`](https://github.com/guility/agents-template-langs/tree/rust/v1.0.4)
 - Go: branch [`go`](https://github.com/guility/agents-template-langs/tree/go), current version [`go/v1.0.4`](https://github.com/guility/agents-template-langs/tree/go/v1.0.4)
-- C#: branch [`csharp`](https://github.com/guility/agents-template-langs/tree/csharp), current version [`csharp/v1.0.5`](https://github.com/guility/agents-template-langs/tree/csharp/v1.0.5)
+- C#: branch [`csharp`](https://github.com/guility/agents-template-langs/tree/csharp), current version [`csharp/v1.0.6`](https://github.com/guility/agents-template-langs/tree/csharp/v1.0.6)
 
 Use `git switch --track origin/<language>` to work on a language branch, or check out its version tag for an immutable snapshot. New tags use `<language>/v<major>.<minor>.<patch>` and must point to commits on the matching branch. Previously published `<language>-v<version>` tags remain unchanged for compatibility; create no further tags in that format.
