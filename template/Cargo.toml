@@ -5,12 +5,12 @@ edition = "2021"
 description = "DDD-based Rust project with clean architecture"
 
 [dependencies]
+async-trait = "0.1"
 # Domain layer should have minimal dependencies
-serde = { version = "1.0", features = ["derive"] }
-thiserror = "1.0"
+time = { version = "0.3", features = ["serde"] }
+tokio = { version = "1.0", features = ["sync", "macros", "rt-multi-thread"] }
 
 [dev-dependencies]
-tokio = { version = "1.0", features = ["full"] }
 testcontainers = "0.15"
 
 [lib]

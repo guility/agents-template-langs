@@ -1,6 +1,6 @@
 //! Interface layer - Controllers и DTOs
 
-use crate::application::{DTO, UseCase};
+use crate::application::UseCase;
 use std::fmt::Debug;
 
 /// Response DTO

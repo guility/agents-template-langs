@@ -52,7 +52,7 @@ impl Entity for BaseEntity {
 /// Агрегат - кластер объектов как единое целое
 pub trait AggregateRoot: Entity {
     type Event: Debug + Send + Sync;
-    
+
     fn domain_events(&self) -> &[Self::Event];
     fn clear_events(&mut self);
 }

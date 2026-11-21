@@ -1,0 +1,6 @@
+.git
+**/target
+**/mutants.out
+**/.cargo
+test-results
+docs/coverage
