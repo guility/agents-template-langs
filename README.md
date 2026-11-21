@@ -4,7 +4,7 @@ Language-specific component rules and starter templates are published on a dedic
 
 All shared policies in [`guility/agents-template/AGENTS.md`](https://github.com/guility/agents-template/blob/main/AGENTS.md) apply here as well. Language branch names are exceptions only in this repository.
 
-The [component × metric quality matrix](https://github.com/guility/agents-template/blob/main/docs/quality/quality-matrix.md) and [per-tool push timings](https://github.com/guility/agents-template/blob/main/docs/quality/fast-check-benchmark.md) are published in `agents-template`.
+The [component × metric quality matrix](https://github.com/guility/agents-template/blob/3bd13749c2cb7ad44424365dcc99b46930b06bfe/docs/quality/quality-matrix.md) and [per-tool push timings](https://github.com/guility/agents-template/blob/3bd13749c2cb7ad44424365dcc99b46930b06bfe/docs/quality/fast-check-benchmark.md) are published in `agents-template`.
 
 ## Current packages
 
