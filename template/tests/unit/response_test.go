@@ -27,9 +27,24 @@ func TestWriteResponseHelpers(t *testing.T) {
 	if err := handler.WriteSuccess(success, "ok"); err != nil || success.Code != 200 {
 		t.Fatalf("success helper failed: %v", err)
 	}
+	var successPayload handler.ResponseDTO
+	if err := json.Unmarshal(success.Body.Bytes(), &successPayload); err != nil {
+		t.Fatal(err)
+	}
+	if !successPayload.Success || successPayload.Data != "ok" {
+		t.Fatalf("unexpected success payload: %+v", successPayload)
+	}
+
 	failure := httptest.NewRecorder()
 	if err := handler.WriteError(failure, 400, "bad"); err != nil || failure.Code != 400 {
 		t.Fatalf("error helper failed: %v", err)
+	}
+	var failurePayload handler.ResponseDTO
+	if err := json.Unmarshal(failure.Body.Bytes(), &failurePayload); err != nil {
+		t.Fatal(err)
+	}
+	if failurePayload.Success || failurePayload.Error != "bad" {
+		t.Fatalf("unexpected error payload: %+v", failurePayload)
 	}
 }
 
