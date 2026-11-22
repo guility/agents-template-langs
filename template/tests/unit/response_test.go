@@ -22,30 +22,35 @@ func TestWriteJSONResponse(t *testing.T) {
 	}
 }
 
-func TestWriteResponseHelpers(t *testing.T) {
+func TestWriteSuccess_ResponseFlags(t *testing.T) {
 	success := httptest.NewRecorder()
 	if err := handler.WriteSuccess(success, "ok"); err != nil || success.Code != 200 {
 		t.Fatalf("success helper failed: %v", err)
 	}
-	var successPayload handler.ResponseDTO
-	if err := json.Unmarshal(success.Body.Bytes(), &successPayload); err != nil {
-		t.Fatal(err)
-	}
+	successPayload := decodeResponse(t, success.Body.Bytes())
 	if !successPayload.Success || successPayload.Data != "ok" {
 		t.Fatalf("unexpected success payload: %+v", successPayload)
 	}
+}
 
+func TestWriteError_ResponseFlags(t *testing.T) {
 	failure := httptest.NewRecorder()
 	if err := handler.WriteError(failure, 400, "bad"); err != nil || failure.Code != 400 {
 		t.Fatalf("error helper failed: %v", err)
 	}
-	var failurePayload handler.ResponseDTO
-	if err := json.Unmarshal(failure.Body.Bytes(), &failurePayload); err != nil {
-		t.Fatal(err)
-	}
+	failurePayload := decodeResponse(t, failure.Body.Bytes())
 	if failurePayload.Success || failurePayload.Error != "bad" {
 		t.Fatalf("unexpected error payload: %+v", failurePayload)
 	}
+}
+
+func decodeResponse(t *testing.T, body []byte) handler.ResponseDTO {
+	t.Helper()
+	var response handler.ResponseDTO
+	if err := json.Unmarshal(body, &response); err != nil {
+		t.Fatal(err)
+	}
+	return response
 }
 
 func TestWriteJSONUnencodablePayload(t *testing.T) {
